@@ -1,8 +1,8 @@
 #config/settings/
 db.sqlite3
 live_static/media/
-
-
+config/settings/base copy.py
+config/settings/local.py
 # Django #
 *.log
 *.pot
