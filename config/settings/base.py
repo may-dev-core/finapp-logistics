@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,13 +40,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'rest_framework',
+    'phonenumber_field',
     'apps_module.account',
     'apps_module.api',
     'apps_module.company',
     'apps_module.staff',
     'apps_module.vehicle',
+    'apps_module.user_profiles',
+    'apps_module.user_account',
+    'apps_module.apps_settings',
 
 ]
+
+# AUTH_USER_MODEL = 'user_account.User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +64,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.RemoteUserBackend',
+)
 
 ROOT_URLCONF = 'config.urls'
 
@@ -138,3 +152,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
