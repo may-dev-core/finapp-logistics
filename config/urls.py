@@ -20,7 +20,7 @@ from django.conf import settings
 
 # from apps_module.user_account.views import homepage, login, logout, dashboard, forgot_password
 from apps_module.webview.views import (
-    homepage, login, logout, dashboard, forgot_password, register, company_profile)
+    homepage, login, logout, dashboard, register, company_profile)
 
 from apps_module.account.views import (income, edit_income, delete_income,
                                        expenses, edit_expenses, delete_expenses,
@@ -92,7 +92,7 @@ urlpatterns = [
          name="delete_vehicle"),
 
 
-    path("forgot_password/", forgot_password, name="forgot_password"),
+#     path("forgot_password/", forgot_password, name="forgot_password"),
 ]
 
 if settings.DEBUG:
