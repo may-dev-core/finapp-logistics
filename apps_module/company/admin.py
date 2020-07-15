@@ -8,14 +8,14 @@ from .models import CompanyProfile
 @admin.register(CompanyProfile)
 class CompanyProfileAdmin(admin.ModelAdmin):
     list_display = [
-        'id',
-        'user',
-        'company_name',
-        'company_address',
-        'company_location',
-        'company_phone_number',
-        'date_added',
-        'date_updated',
+        "id",
+        "user",
+        "company_name",
+        "company_address",
+        "company_location",
+        "company_phone_number",
+        "date_added",
+        "date_updated",
     ]
 
     class Meta:

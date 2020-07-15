@@ -3,11 +3,14 @@ db.sqlite3
 live_static/media/
 config/settings/base copy.py
 config/settings/local.py
+config/__Pycache__/
+.vscode
 # Django #
 *.log
 *.pot
 *.pyc
 __pycache__
+*__pycache__
 db.sqlite3
 media
 

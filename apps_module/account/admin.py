@@ -7,6 +7,7 @@ class IncomeAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'date_of_income',
+        'company',
         'vehicle',
         'amount',
         'source_of_income',
@@ -24,10 +25,11 @@ class ExpensesAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'date_of_expense',
+        'company',
         'vehicle',
-        'type_of_expenses',
+        'type_of_expenditure',
         'amount',
-        'expense_description',
+        'expenditure_description',
         'receipt_number',
         'date_added',
         'date_updated',

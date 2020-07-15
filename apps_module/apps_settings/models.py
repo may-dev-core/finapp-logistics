@@ -24,25 +24,28 @@ class Position(models.Model):
 
 class Employee(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    employee_id = models.CharField(max_length=20)
+    employee_id = models.CharField(max_length=20, null=True, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER)
-    location = models.CharField(max_length=255)
-    phone_number_1 = PhoneNumberField(help_text="format +233147258369")
-    phone_number_2 = PhoneNumberField(
-        null=True, blank=True, help_text="format +233147258369")
-    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    location = models.CharField(max_length=255, null=True, blank=True)
+    phone_number_1 = models.CharField(max_length=255, null=True, blank=True)
+    phone_number_2 = models.CharField(max_length=255, null=True, blank=True)
+    position = models.ForeignKey(
+        Position, on_delete=models.CASCADE, null=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        return str(self.first_name)
+
+    def get_employee_fullname(self):
         return str(self.first_name + " " + self.last_name)
 
 
 class VehiclePurpose(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    purpose_name = models.CharField(max_length=20, unique=True)
+    purpose_name = models.CharField(max_length=20)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -51,7 +54,7 @@ class VehiclePurpose(models.Model):
 
 class VehicleType(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    vehicle_type = models.CharField(max_length=20, unique=True)
+    vehicle_type = models.CharField(max_length=20)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -60,7 +63,7 @@ class VehicleType(models.Model):
 
 class VehicleFuelType(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    fuel_type = models.CharField(max_length=20, unique=True)
+    fuel_type = models.CharField(max_length=20)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -69,7 +72,7 @@ class VehicleFuelType(models.Model):
 
 class VehicleStatus(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    vehicle_status = models.CharField(max_length=20, unique=True)
+    vehicle_status = models.CharField(max_length=20)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -78,7 +81,7 @@ class VehicleStatus(models.Model):
 
 class TypeOfExpense(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    type_of_expense = models.CharField(max_length=20, unique=True)
+    type_of_expense = models.CharField(max_length=20)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -87,7 +90,7 @@ class TypeOfExpense(models.Model):
 
 class SourceOfIncome(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    source_of_income = models.CharField(max_length=20, unique=True)
+    source_of_income = models.CharField(max_length=20)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
