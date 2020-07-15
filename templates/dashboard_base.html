@@ -282,17 +282,17 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="profile.html"><img src="img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+          <!-- <p class="centered"><a href="profile.html"><img src="img/ui-sam.jpg" class="img-circle" width="80"></a></p> -->
           <h5 class="centered">{{company_name}}</h5>
           <li class="mt">
-            <a class="active" href="{% url 'dashboard' %}">
+            <a class="active" href="{% url 'profit_loss' %}">
               <i class="fa fa-dashboard"></i>
               <span>Dashboard</span>
             </a>
           </li>
           <li class="sub-menu">
             <a href="javascript:;">
-              <i class="fa fa-desktop"></i>
+              <i class="fa fa-bar-chart-o"></i>
               <span>Accounts</span>
             </a>
             <ul class="sub">
@@ -497,6 +497,35 @@
       src="{% static 'lib/advanced-datatable/js/jquery.dataTables.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/advanced-datatable/js/DT_bootstrap.js' %}"></script>
  
+<script>
+
+              $(function () {
+                // window.prettyPrint && prettyPrint();
+                // start date
+
+                $('input[name="date_of_expense"]').datepicker({
+                  format: 'dd-mm-yyyy',
+                  autoclose: true
+                });
+             
+
+                $('input[name="date_of_income"]').datepicker({
+                  format: 'dd-mm-yyyy',
+                });
+
+                 $('input[name="date_from"]').datepicker({
+                  format: 'dd-mm-yyyy',
+                });
+
+                $('input[name="date_to"]').datepicker({
+                  format: 'dd-mm-yyyy',
+                });
+              });
+
+
+</script>
+
+    
 </body>
 
 </html>

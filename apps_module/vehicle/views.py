@@ -54,6 +54,7 @@ def vehicle(request):
         return HttpResponseRedirect('/vehicle')
 
     context = {
+        "company_profile_obj": company_profile_obj,
         "vehicle_form": vehicle_form,
         "vehicle_obj": vehicle_obj,
     }

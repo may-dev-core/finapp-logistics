@@ -61,6 +61,8 @@ from lib.RandomTokenGenerator import RandomTokenGenerator
 
 
 def homepage(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/profit_loss")
     context = {}
     return render(request, "login.html", context)
 
@@ -69,7 +71,7 @@ def homepage(request):
 # @django_logout
 def login(request, *args, **kwargs):
     if request.user.is_authenticated:
-        return HttpResponseRedirect("/dashboard")
+        return HttpResponseRedirect("/profit_loss")
 
     message = ""
     result = ""
@@ -103,7 +105,7 @@ def login(request, *args, **kwargs):
                         result = {
                             "status_code": 200,
                             "message": message,
-                            "next_page": "dashboard"
+                            "next_page": "/profit_loss"
                         }
                         return JsonResponse(result)
             else:
@@ -188,7 +190,7 @@ def register(request, *args, **kwargs):
                             result = {
                                 "status_code": 200,
                                 "message": message,
-                                "next_page": "dashboard",
+                                "next_page": "/profit_loss",
                             }
                             return JsonResponse(result)
                             # return HttpResponseRedirect("/dashboard")
@@ -263,7 +265,7 @@ def company_profile(request, *args, **kwargs):
             result = {
                 "status_code": 200,
                 "message": "",
-                "next_page": "/dashboard"
+                "next_page": "/profit_loss"
             }
         return JsonResponse(result)
 

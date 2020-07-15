@@ -278,7 +278,7 @@ def income(request):
 
     company_profile_obj = CompanyProfile.objects.get(user=user)
 
-    income_obj = Income.objects.all()
+    income_obj = Income.objects.filter(company=company_profile_obj)
 
     income_form = IncomeForm(request.POST or None)
 
@@ -333,7 +333,7 @@ def edit_income(request, iid):
     user = request.user
 
     company_profile_obj = CompanyProfile.objects.get(user=user)
-    income_obj = Income.objects.all()
+    income_obj = Income.objects.filter(company=company_profile_obj)
     instance = get_object_or_404(Income, id=iid)
     edit_income_form = IncomeForm(request.POST or None, instance=instance)
 
@@ -477,7 +477,7 @@ def expenses(request):
 
     company_profile_obj = CompanyProfile.objects.get(user=user)
 
-    expense_obj = Expenses.objects.all()
+    expense_obj = Expenses.objects.filter(company=company_profile_obj)
 
     expenses_form = ExpensesForm(request.POST or None)
 
@@ -494,13 +494,13 @@ def expenses(request):
             expenditure_description = expenses_form.cleaned_data["expenditure_description"]
             receipt_number = expenses_form.cleaned_data["receipt_number"]
 
-            # date_of_income = datetime.strptime(
-            #     date_of_income, "%m-%d-%Y").date()
+            # date_of_expense = datetime.strptime(
+            #     date_of_expense, "%Y-%m-%d").date()
 
             try:
 
                 Expenses(
-                    date_of_income=date_of_expense,
+                    date_of_expense=date_of_expense,
                     company=company_profile_obj,
                     vehicle=vehicle,
                     amount=amount,
@@ -531,7 +531,7 @@ def edit_expenses(request, iid):
 
     user = request.user
     company_profile_obj = CompanyProfile.objects.get(user=user)
-    expense_obj = Expenses.objects.all()
+    expense_obj = Expenses.objects.filter(company=company_profile_obj)
 
     instance = get_object_or_404(Expenses, id=iid)
     expenses_form = ExpensesForm(request.POST or None, instance=instance)
@@ -615,10 +615,10 @@ def profit_loss(request):
         vehicle = post_data["vehicle"]
 
         date_from = datetime.strptime(
-            date_from, "%m-%d-%Y").date()
+            date_from, "%d-%m-%Y").date()
 
         date_to = datetime.strptime(
-            date_to, "%m-%d-%Y").date()
+            date_to, "%d-%m-%Y").date()
 
         try:
 

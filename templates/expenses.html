@@ -10,6 +10,10 @@
   .success {
     color: rgb(9, 150, 9) !important;
   }
+
+  .refresh {
+    margin-right: .5%;
+  }
 </style>
 
 
@@ -40,7 +44,17 @@ return str(self.source_of_income) -->
 <div class="row mt">
   <div class="col-lg-12">
     <div class="form-panel">
-      <h4 class="mb"><i class="fa fa-angle-right"></i> Add Expenditure</h4>
+      <h4 class="mb"><i class="fa fa-angle-right"></i> Add Expenditure
+
+        <span><a href="{% url 'vehicle' %}" id="refresh" class="btn btn-theme pull-right refresh" type=""
+            value="Refresh">Vehicle</a></span>
+
+            <span><a href="{% url 'profit_loss' %}" id="refresh" class="btn btn-theme pull-right refresh" type=""
+                value="Refresh">Profit & Loss</a></span>
+        <span><a href="{% url 'income' %}" id="refresh" class="btn btn-theme pull-right refresh" type=""
+            value="Refresh">Income</a></span>
+
+      </h4>
       <form class="form-inline" role="form" method="POST">{% csrf_token %}
 
         {{ expenses_form|crispy }}
@@ -93,11 +107,11 @@ return str(self.source_of_income) -->
         <!-- <td id="selectedRowsCount"></td> -->
 
         <td>
-                  <a href="{% url 'edit_expenses' expense.id %}">Edit</a> &nbsp;
-                  <a href="{% url 'delete_expenses' expense.id %}" style="color: red;"
-                    onclick="return confirm('Are you sure you want to delete?');">Delete</a>
-          
-       
+          <a href="{% url 'edit_expenses' expense.id %}">Edit</a> &nbsp;
+          <a href="{% url 'delete_expenses' expense.id %}" style="color: red;"
+            onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+
+
         </td>
 
 
@@ -286,7 +300,7 @@ return str(self.source_of_income) -->
 
 
 
-  var income_array_obj = {{ income_array| safe}};
+  // var income_array_obj = {{ income_array| safe}};
   // console.log(income_array_obj[0]);
 
   // $(document).ready(function () {
@@ -351,7 +365,7 @@ return str(self.source_of_income) -->
 
   // });
 
-  function drawTable(obj) {
+  $(document).ready(function () {
 
     var obj = obj;
 
@@ -361,31 +375,31 @@ return str(self.source_of_income) -->
 
       "lengthMenu": [[10, 25, 50, 100, 500, 1000, 5000, 10000, -1], [10, 25, 50, 100, 500, 1000, 5000, 10000, "All"]],
       "columnDefs": [{
-        "searchable": false,
-        "orderable": false,
+        "searchable": true,
+        "orderable": true,
         "targets": 0
       }],
       "order": [[1, 'asc']],
       "bDestroy": true,
 
-      data: obj,
-      columns: [
-        { title: "#" },
-        { title: "Sys. ID" },
-        { title: "Date" },
-        { title: "Company" },
-        { title: "Vehicle" },
-        { title: "Amount" },
-        { title: "Source of Income" },
-        { title: "Description" },
-        // { title: "June" },
-        // { title: "July" },
-        // { title: "August" },
-        // { title: "September" },
-        // { title: "October" },
-        // { title: "November" },
-        // { title: "December" }
-      ]
+      // data: obj,
+      // columns: [
+      //   { title: "#" },
+      //   { title: "Sys. ID" },
+      //   { title: "Date" },
+      //   { title: "Company" },
+      //   { title: "Vehicle" },
+      //   { title: "Amount" },
+      //   { title: "Source of Income" },
+      //   { title: "Description" },
+      //   // { title: "June" },
+      //   // { title: "July" },
+      //   // { title: "August" },
+      //   // { title: "September" },
+      //   // { title: "October" },
+      //   // { title: "November" },
+      //   // { title: "December" }
+      // ]
 
 
     });
@@ -403,7 +417,7 @@ return str(self.source_of_income) -->
         });
     }).draw();
 
-  };
+  });
 
   // var t = $('#id_reg_table').DataTable();
 

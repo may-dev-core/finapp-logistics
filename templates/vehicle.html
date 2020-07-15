@@ -9,13 +9,25 @@
   .success {
     color: rgb(9, 150, 9) !important;
   }
+
+    .refresh {
+    margin-right: .5%;
+  }
 </style>
 
 
 
 <h3><i class="fa fa-angle-right"></i> Settings/Vehicle(s) 
-  <span><a href="{% url 'vehicle' %}" id="btn_refresh" class="btn btn-theme pull-right" type="" value="Refresh" >Refresh</a></span></h3> 
-<!-- BASIC FORM ELELEMNTS -->
+  <span><a href="{% url 'vehicle' %}" id="btn_refresh" class="btn btn-theme pull-right" type="" value="Refresh" >Reload</a></span>
+        <span><a href="{% url 'profit_loss' %}" id="refresh" class="btn btn-theme pull-right refresh" type=""
+            value="Refresh">Profit & Loss</a></span>
+        <span><a href="{% url 'income' %}" id="refresh" class="btn btn-theme pull-right refresh" type=""
+            value="Refresh">Income</a></span>
+        
+        <span><a href="{% url 'expenses' %}" id="refresh" class="btn btn-theme pull-right refresh" type=""
+            value="Refresh">Expenses</a></span>
+</h3>
+  <!-- BASIC FORM ELELEMNTS -->
 
 <!-- /row -->
 <!-- INLINE FORM ELELEMNTS -->
