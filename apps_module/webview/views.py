@@ -51,7 +51,7 @@ from apps_module.company.models import CompanyProfile
 
 from validate_email import validate_email
 # from lib.phone import get_phone_to_username, get_phone_number, phone_to_momo_format
-from lib.RandomTokenGenerator import RandomTokenGenerator
+# from lib.RandomTokenGenerator import RandomTokenGenerator
 # from lib.pyramid_engine import get_progress_level, check_current_level
 # from lib.sms import send_signUp_sms, send_password_pin_sms
 # from lib.email import send_signUp_email, send_contact_email
@@ -633,135 +633,135 @@ def faqs(request):
     return render(request, "faqs.html", context)
 
 
-def forgot_password(request):
-    # user=request.user
+# def forgot_password(request):
+#     # user=request.user
 
-    # print(RandomTokenGenerator().generatePasswordPin())
-    if request.method == "POST":
-        post_data = json.loads(request.body.decode())
-        print("post data:", )
-        user_pin = post_data["user_pin"]
+#     # print(RandomTokenGenerator().generatePasswordPin())
+#     if request.method == "POST":
+#         post_data = json.loads(request.body.decode())
+#         print("post data:", )
+#         user_pin = post_data["user_pin"]
 
-        if User.objects.filter(username=user_pin).exists():
-            # send sms with pin, save pin and direct to verify page
-            user = User.objects.get(username=user_pin)
-            password_pin = RandomTokenGenerator().generatePasswordPin()
-            print(password_pin)
+#         if User.objects.filter(username=user_pin).exists():
+#             # send sms with pin, save pin and direct to verify page
+#             user = User.objects.get(username=user_pin)
+#             password_pin = RandomTokenGenerator().generatePasswordPin()
+#             print(password_pin)
 
-            profile_obj = PersonalProfile.objects.get(user=user)
-            print("cell ", str(profile_obj.phone_number))
-            try:
+#             profile_obj = PersonalProfile.objects.get(user=user)
+#             print("cell ", str(profile_obj.phone_number))
+#             try:
 
-                if PasswordVerification.objects.filter(user_pin__exact=user_pin).exists():
-                    PasswordVerification.objects.filter(
-                        user_pin__exact=user_pin).update(password_pin=password_pin)
-                    pass_pin_obj = PasswordVerification.objects.get(
-                        user_pin__exact=user_pin)
-                else:
-                    pass_pin_obj = PasswordVerification.objects.create(
-                        user_pin=user_pin, password_pin=password_pin)
+#                 if PasswordVerification.objects.filter(user_pin__exact=user_pin).exists():
+#                     PasswordVerification.objects.filter(
+#                         user_pin__exact=user_pin).update(password_pin=password_pin)
+#                     pass_pin_obj = PasswordVerification.objects.get(
+#                         user_pin__exact=user_pin)
+#                 else:
+#                     pass_pin_obj = PasswordVerification.objects.create(
+#                         user_pin=user_pin, password_pin=password_pin)
 
-                print(pass_pin_obj)
-                if pass_pin_obj:
-                    print(pass_pin_obj.password_pin)
-                    sms_data = send_password_pin_sms(
-                        user.first_name, profile_obj.phone_number, pass_pin_obj.password_pin)
-                    result = {
-                        "status_code": 200,
-                        "message": "",
-                        "next_url": "/verify_code"
-                    }
-                    return JsonResponse(result)
+#                 print(pass_pin_obj)
+#                 if pass_pin_obj:
+#                     print(pass_pin_obj.password_pin)
+#                     sms_data = send_password_pin_sms(
+#                         user.first_name, profile_obj.phone_number, pass_pin_obj.password_pin)
+#                     result = {
+#                         "status_code": 200,
+#                         "message": "",
+#                         "next_url": "/verify_code"
+#                     }
+#                     return JsonResponse(result)
 
-            except Exception as e:
-                print(e)
-                raise e
-                result = {
-                    "status_code": 400,
-                    "message": "Cannot change password, please try again or contact Administrator",
-                    # "next_url":"/verify_code"
-                }
-                return JsonResponse(result)
+#             except Exception as e:
+#                 print(e)
+#                 raise e
+#                 result = {
+#                     "status_code": 400,
+#                     "message": "Cannot change password, please try again or contact Administrator",
+#                     # "next_url":"/verify_code"
+#                 }
+#                 return JsonResponse(result)
 
-        else:
-            result = {
-                "status_code": 400,
-                "message": "User email is invalid, Try again.",
-                # "next_url":"/verify_digit"
-            }
-            return JsonResponse(result)
+#         else:
+#             result = {
+#                 "status_code": 400,
+#                 "message": "User email is invalid, Try again.",
+#                 # "next_url":"/verify_digit"
+#             }
+#             return JsonResponse(result)
 
-    context = {}
-    return render(request, "forgot_password.html", context)
-
-
-def verify_code(request):
-
-    if request.method == "POST":
-        post_data = json.loads(request.body.decode())
-        print("post data:", )
-        vcode = post_data["vcode"]
-
-        if PasswordVerification.objects.filter(password_pin__exact=vcode).exists():
-            # send sms with pin, save pin and direct to verify page
-            pass_v_obj = PasswordVerification.objects.get(
-                password_pin__exact=vcode)
-            user_pin = pass_v_obj.user_pin
-
-            print("yes")
-            result = {
-                "status_code": 200,
-                "message": "",
-                "next_url": "/change_password/?q="+str(user_pin)+""
-            }
-            return JsonResponse(result)
-        else:
-            result = {
-                "status_code": 400,
-                "message": "Verification code is invalid, Try again.",
-                # "next_url":"/verify_digit"
-            }
-            return JsonResponse(result)
-
-    context = {}
-    return render(request, "verify_code.html", context)
+#     context = {}
+#     return render(request, "forgot_password.html", context)
 
 
-def change_password(request, *args, **kwargs):
-    user_pin = request.GET.get("q")
-    print(user_pin)
-    if request.method == "POST":
-        post_data = json.loads(request.body.decode())
-        print("post data:", post_data)
-        post_user_pin = post_data["pin"]
-        new_password = post_data["new_password"]
+# def verify_code(request):
 
-        if PasswordVerification.objects.filter(user_pin__exact=post_user_pin).exists():
-            # change password
-            user_obj = User.objects.get(username__exact=post_user_pin)
-            user_obj.set_password(new_password)
-            user_obj.save()
+#     if request.method == "POST":
+#         post_data = json.loads(request.body.decode())
+#         print("post data:", )
+#         vcode = post_data["vcode"]
 
-            PasswordVerification.objects.filter(
-                user_pin__exact=post_user_pin).delete()
+#         if PasswordVerification.objects.filter(password_pin__exact=vcode).exists():
+#             # send sms with pin, save pin and direct to verify page
+#             pass_v_obj = PasswordVerification.objects.get(
+#                 password_pin__exact=vcode)
+#             user_pin = pass_v_obj.user_pin
 
-            if user_obj:
-                print("yes")
-                result = {
-                    "status_code": 200,
-                    "message": "",
-                    "next_url": "/login"
-                }
-                return JsonResponse(result)
-        else:
-            result = {
-                "status_code": 400,
-                "message": "Invalid Password request, Try again.",
-                # "next_url":"/verify_digit"
-            }
-            return JsonResponse(result)
+#             print("yes")
+#             result = {
+#                 "status_code": 200,
+#                 "message": "",
+#                 "next_url": "/change_password/?q="+str(user_pin)+""
+#             }
+#             return JsonResponse(result)
+#         else:
+#             result = {
+#                 "status_code": 400,
+#                 "message": "Verification code is invalid, Try again.",
+#                 # "next_url":"/verify_digit"
+#             }
+#             return JsonResponse(result)
 
-    context = {
-        "user_pin": user_pin
-    }
-    return render(request, "change_password.html", context)
+#     context = {}
+#     return render(request, "verify_code.html", context)
+
+
+# def change_password(request, *args, **kwargs):
+#     user_pin = request.GET.get("q")
+#     print(user_pin)
+#     if request.method == "POST":
+#         post_data = json.loads(request.body.decode())
+#         print("post data:", post_data)
+#         post_user_pin = post_data["pin"]
+#         new_password = post_data["new_password"]
+
+#         if PasswordVerification.objects.filter(user_pin__exact=post_user_pin).exists():
+#             # change password
+#             user_obj = User.objects.get(username__exact=post_user_pin)
+#             user_obj.set_password(new_password)
+#             user_obj.save()
+
+#             PasswordVerification.objects.filter(
+#                 user_pin__exact=post_user_pin).delete()
+
+#             if user_obj:
+#                 print("yes")
+#                 result = {
+#                     "status_code": 200,
+#                     "message": "",
+#                     "next_url": "/login"
+#                 }
+#                 return JsonResponse(result)
+#         else:
+#             result = {
+#                 "status_code": 400,
+#                 "message": "Invalid Password request, Try again.",
+#                 # "next_url":"/verify_digit"
+#             }
+#             return JsonResponse(result)
+
+#     context = {
+#         "user_pin": user_pin
+#     }
+#     return render(request, "change_password.html", context)
