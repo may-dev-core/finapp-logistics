@@ -1,9 +1,18 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Income, Expenses
+from apps_module.vehicle.models import Vehicle
+from apps_module.company.models import CompanyProfile
+
+
+
+# def get_user_company(request, *args, **kwargs):
+#     user = re
+
 
 
 class IncomeForm(forms.ModelForm):
+
 
     class Meta:
         model = Income
@@ -16,6 +25,13 @@ class IncomeForm(forms.ModelForm):
         widget=forms.DateInput(format='%d-%m-%Y'),
         input_formats=('%d-%m-%Y', )
     )
+
+    def __init__(self, *args, **kwargs):
+        user = self.user = kwargs.pop('user')
+        super(IncomeForm, self).__init__(*args, **kwargs)
+        company_prof_obj = CompanyProfile.objects.get(user=user)
+        self.fields['vehicle'].queryset = Vehicle.objects.filter(company=company_prof_obj)
+
 
 class ExpensesForm(forms.ModelForm):
     class Meta:
@@ -30,3 +46,10 @@ class ExpensesForm(forms.ModelForm):
         widget=forms.DateInput(format='%d-%m-%Y'),
         input_formats=('%d-%m-%Y', )
     )
+
+    def __init__(self, *args, **kwargs):
+        user = self.user = kwargs.pop('user')
+        super(ExpensesForm, self).__init__(*args, **kwargs)
+        company_prof_obj = CompanyProfile.objects.get(user=user)
+        self.fields['vehicle'].queryset = Vehicle.objects.filter(
+            company=company_prof_obj)

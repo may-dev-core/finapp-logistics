@@ -280,7 +280,7 @@ def income(request):
 
     income_obj = Income.objects.filter(company=company_profile_obj)
 
-    income_form = IncomeForm(request.POST or None)
+    income_form = IncomeForm(request.POST or None, user=user)
 
     if request.method == "POST":
         print(request.POST)
@@ -335,7 +335,7 @@ def edit_income(request, iid):
     company_profile_obj = CompanyProfile.objects.get(user=user)
     income_obj = Income.objects.filter(company=company_profile_obj)
     instance = get_object_or_404(Income, id=iid)
-    edit_income_form = IncomeForm(request.POST or None, instance=instance)
+    edit_income_form = IncomeForm(request.POST or None, instance=instance, user=user)
 
 
     if request.method == "POST":
@@ -479,7 +479,7 @@ def expenses(request):
 
     expense_obj = Expenses.objects.filter(company=company_profile_obj)
 
-    expenses_form = ExpensesForm(request.POST or None)
+    expenses_form = ExpensesForm(request.POST or None, user=user)
 
     if request.method == "POST":
         print(request.POST)
@@ -534,7 +534,7 @@ def edit_expenses(request, iid):
     expense_obj = Expenses.objects.filter(company=company_profile_obj)
 
     instance = get_object_or_404(Expenses, id=iid)
-    expenses_form = ExpensesForm(request.POST or None, instance=instance)
+    expenses_form = ExpensesForm(request.POST or None, instance=instance, user=user)
 
     if request.method == "POST":
         print(request.POST)
